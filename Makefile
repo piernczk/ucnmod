@@ -5,15 +5,18 @@ BINDIR ?= ./bin
 LD = $(CC)
 CFLAGS += -Wall -I$(INCDIR)
 
-SOURCES := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(INCDIR)/*.h)
-OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 ifeq ($(OS),Windows_NT)
 	TARGET ?= ucnmod.exe
+	SOURCES = $(SRCDIR)/win.c
 else
 	TARGET ?= ucnmod
+	SOURCES = $(SRCDIR)/linux.c
 endif
+
+SOURCES += $(SRCDIR)/main.c
+OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 all: $(BINDIR)/$(TARGET)
 

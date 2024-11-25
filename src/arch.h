@@ -5,7 +5,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#ifdef __linux__
+#if defined(_WIN32)
+#include <windows.h>
+typedef DWORD pid_t;
+typedef HANDLE ucn_t;
+#elif defined(__linux__)
 #include <sys/types.h>
 typedef pid_t ucn_t;
 #endif
