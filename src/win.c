@@ -2,14 +2,14 @@
 
 #include <psapi.h>
 
-ucn_t open_pid(pid_t pid) {
+ucn_t attach_pid(pid_t pid) {
     HANDLE hnd = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ |
                                  PROCESS_VM_WRITE,
                              false, pid);
     return hnd;
 }
 
-ucn_t open_auto(char *proc_name) {
+ucn_t attach_pname(char *proc_name) {
     int size = 0;
     DWORD count = 0;
     DWORD *processes = NULL;
@@ -46,8 +46,8 @@ ucn_t open_auto(char *proc_name) {
     return open_pid(pid);
 }
 
-void close(ucn_t ucn) { CloseHandle(ucn); }
-bool is_open(ucn_t ucn) { return ucn != 0; }
+void detach(ucn_t ucn) { CloseHandle(ucn); }
+bool is_attached(ucn_t ucn) { return ucn != 0; }
 
 void read_data(ucn_t ucn, void *addr, void *buf, size_t len) {
     ReadProcessMemory(ucn, addr, buf, len, NULL);

@@ -21,18 +21,18 @@ void write_long(ucn_t ucn, void *addr, long word) {
     ptrace(PTRACE_POKEDATA, ucn, addr, word);
 }
 
-ucn_t open_pid(pid_t pid) {
+ucn_t attach_pid(pid_t pid) {
     long res = ptrace(PTRACE_ATTACH, pid, NULL, NULL);
     return res == 0 ? pid : 0;
 }
 
-ucn_t open_auto(char *proc_name) {
+ucn_t attach_pname(char *proc_name) {
     printf("unimplemented\n");
     return 0;
 }
 
-void close(ucn_t ucn) { ptrace(PTRACE_DETACH, ucn, NULL, NULL); }
-bool is_open(ucn_t ucn) { return ucn != 0; }
+void detach(ucn_t ucn) { ptrace(PTRACE_DETACH, ucn, NULL, NULL); }
+bool is_attached(ucn_t ucn) { return ucn != 0; }
 
 long read_word(ucn_t ucn, void *addr) {
     return read_long(ucn, addr) & WORD_MASK;

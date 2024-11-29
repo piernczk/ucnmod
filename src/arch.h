@@ -14,11 +14,11 @@ typedef HANDLE ucn_t;
 typedef pid_t ucn_t;
 #endif
 
-ucn_t open_pid(pid_t pid);
-ucn_t open_auto(char *proc_name);
+ucn_t attach_pid(pid_t pid);
+ucn_t attach_pname(char *proc_name);
 
-void close(ucn_t ucn);
-bool is_open(ucn_t ucn);
+void detach(ucn_t ucn);
+bool is_attached(ucn_t ucn);
 
 long read_word(ucn_t ucn, void *addr);
 void read_data(ucn_t ucn, void *addr, void *buf, size_t len);
