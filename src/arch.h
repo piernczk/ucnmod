@@ -8,22 +8,28 @@
 #if defined(_WIN32)
 #include <windows.h>
 typedef DWORD pid_t;
-typedef HANDLE ucn_t;
 #elif defined(__linux__)
 #include <sys/types.h>
-typedef pid_t ucn_t;
 #endif
 
-ucn_t attach_pid(pid_t pid);
-ucn_t attach_pname(char *proc_name);
+struct ucn {
+    pid_t pid;
+    const void *base;
+#if defined(_WIN32)
+    HANDLE hnd;
+#endif
+};
 
-void detach(ucn_t ucn);
-bool is_attached(ucn_t ucn);
+struct ucn attach_pid(pid_t pid);
+struct ucn attach_pname(const char *proc_name);
 
-long read_word(ucn_t ucn, void *addr);
-void read_data(ucn_t ucn, void *addr, void *buf, size_t len);
+void detach(struct ucn ucn);
+bool is_attached(struct ucn ucn);
 
-void write_word(ucn_t ucn, void *addr, long word);
-void write_data(ucn_t ucn, void *addr, void *data, size_t len);
+long read_word(struct ucn ucn, const void *addr);
+void read_data(struct ucn ucn, const void *addr, void *buf, size_t len);
+
+void write_word(struct ucn ucn, const void *addr, long word);
+void write_data(struct ucn ucn, const void *addr, const void *data, size_t len);
 
 #endif
