@@ -7,9 +7,9 @@
 
 static const char DEF_PROC_NAME[] = "Ultimate Custom Night.exe";
 
-static const ptrdiff_t FRAMES = 0x000b49cc;
-static const ptrdiff_t OFFSET_FPS_VAL = 0x78;
-static const ptrdiff_t OFFSET_FPS_NEXT = 0x1a8;
+static const ptrdiff_t GLOBAL1 = 0x000b49cc;
+static const ptrdiff_t GLOBAL1_FPS = 0x78;
+static const ptrdiff_t GLOBAL1_NEXT = 0x1a8;
 
 void cmd_attach(struct state *state, char *args);
 void cmd_detach(struct state *state, char *args);
