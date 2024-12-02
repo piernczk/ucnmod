@@ -5,6 +5,7 @@
 
 struct state {
     struct ucn ucn;
+    pid_t prev_pid;
     bool running;
 };
 

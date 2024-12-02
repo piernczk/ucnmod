@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "arch.h"
 #include "commands.h"
 
 void cmd_attach(struct state *state, char *args) {
@@ -12,10 +13,21 @@ void cmd_attach(struct state *state, char *args) {
 
     char *pid_arg = strtok(args, " ");
     if (pid_arg) {
-        pid_t pid = atoi(pid_arg);
-        if (pid <= 0) {
-            printf("Usage: attach [pid]\n");
-            return;
+        pid_t pid;
+        if (!strcmp(pid_arg, "prev")) {
+            if (state->prev_pid) {
+                pid = state->prev_pid;
+            } else {
+                printf("No previous pid saved\n");
+                return;
+            }
+        } else {
+            pid = atoi(pid_arg);
+            if (pid <= 0) {
+                printf("Usage: attach [pid]\n");
+                printf("       attach prev\n");
+                return;
+            }
         }
 
         state->ucn = attach_pid(pid);
@@ -49,6 +61,7 @@ void cmd_attach(struct state *state, char *args) {
     }
 
     printf("Successfully attached to process %i\n", state->ucn.pid);
+    state->prev_pid = state->ucn.pid;
 }
 
 void cmd_detach(struct state *state, char *args) {
