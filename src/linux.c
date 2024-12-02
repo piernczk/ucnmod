@@ -3,14 +3,14 @@
 #include <stdio.h>
 #include <sys/ptrace.h>
 
-const size_t LONG_SIZE = sizeof(long);
-const size_t WORD_SIZE = 32;
-const long WORD_MASK = (1L << WORD_SIZE) - 1;
+static const size_t LONG_SIZE = sizeof(long);
+static const size_t WORD_SIZE = 32;
+static const long WORD_MASK = (1L << WORD_SIZE) - 1;
 // it's always this address in wine by default
 // i think it could be changed but i don't bother with this
 // do you really need aslr for fnaf??
-const void *const BASE = (const void *)0x00400000;
-const struct ucn UCN_NULL = {0, 0};
+static const void *const BASE = (const void *)0x00400000;
+static const struct ucn UCN_NULL = {0, 0};
 
 long mask_bytes(size_t cnt) {
     // i think this assumes little-endianness but idc

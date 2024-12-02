@@ -24,7 +24,7 @@ void cmd_attach(struct state *state, char *args) {
             return;
         }
     } else {
-        const size_t BUF_SIZE = 128;
+        static const size_t BUF_SIZE = 128;
         printf("Process name [%s]: ", DEF_PROC_NAME);
         char *pname = malloc(BUF_SIZE);
         fgets(pname, BUF_SIZE, stdin);

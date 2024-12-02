@@ -3,7 +3,7 @@
 #include <psapi.h>
 #include <string.h>
 
-const struct ucn UCN_NULL = {0, 0, 0};
+static const struct ucn UCN_NULL = {0, 0, 0};
 
 const void *get_base(HANDLE hnd, const char *proc_name, size_t name_len) {
     // get modules inside the process
