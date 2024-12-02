@@ -83,4 +83,50 @@ void cmd_status(struct state *state, char *args) {
     }
 }
 
+void cmd_fps(struct state *state, char *args) {
+    if (!is_attached(state->ucn)) {
+        printf("Currently not attached\n");
+        return;
+    }
+
+    char *fps_arg = strtok(args, " ");
+    if (fps_arg) {
+        int fps = atoi(fps_arg);
+        if (fps <= 0) {
+            printf("Usage: attach [fps]\n");
+            return;
+        }
+
+        const void *global1 =
+            (const void *)read_word(state->ucn, state->ucn.base + GLOBAL1);
+        while (global1) {
+            write_word(state->ucn, global1 + GLOBAL1_FPS, fps);
+            global1 =
+                (const void *)read_word(state->ucn, global1 + GLOBAL1_NEXT);
+        }
+
+        printf("Successfully set fps to %i\n", fps);
+    } else {
+        const void *global1 =
+            (const void *)read_word(state->ucn, state->ucn.base + GLOBAL1);
+        if (!global1) {
+            printf("No fps pointer found\n");
+            return;
+        }
+
+        long fps_first = read_word(state->ucn, global1 + GLOBAL1_FPS);
+        global1 = (const void *)read_word(state->ucn, global1 + GLOBAL1_NEXT);
+        long fps = fps_first;
+
+        printf("Fps list: [");
+        while (global1) {
+            printf("%li, ", fps);
+            fps = read_word(state->ucn, global1 + GLOBAL1_FPS);
+            global1 =
+                (const void *)read_word(state->ucn, global1 + GLOBAL1_NEXT);
+        }
+        printf("%li]\nCurrent fps: %li\n", fps, fps_first);
+    }
+}
+
 void cmd_quit(struct state *state, char *args) { state->running = false; }
