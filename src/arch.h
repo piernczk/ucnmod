@@ -23,7 +23,7 @@ struct ucn {
 struct ucn attach_pid(pid_t pid);
 struct ucn attach_pname(const char *proc_name);
 
-void detach(struct ucn ucn);
+void detach(struct ucn *ucn);
 bool is_attached(struct ucn ucn);
 
 long read_word(struct ucn ucn, const void *addr);

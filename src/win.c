@@ -113,7 +113,11 @@ struct ucn attach_pname(const char *proc_name) {
     return ucn;
 }
 
-void detach(struct ucn ucn) { CloseHandle(ucn.hnd); }
+void detach(struct ucn *ucn) {
+    CloseHandle(ucn->hnd);
+    *ucn = UCN_NULL;
+}
+
 bool is_attached(struct ucn ucn) { return ucn.pid != 0; }
 
 void read_data(struct ucn ucn, const void *addr, void *buf, size_t len) {

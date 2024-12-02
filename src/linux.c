@@ -37,7 +37,11 @@ struct ucn attach_pname(const char *proc_name) {
     return UCN_NULL;
 }
 
-void detach(struct ucn ucn) { ptrace(PTRACE_DETACH, ucn.pid, NULL, NULL); }
+void detach(struct ucn *ucn) {
+    ptrace(PTRACE_DETACH, ucn->pid, NULL, NULL);
+    *ucn = UCN_NULL;
+}
+
 bool is_attached(struct ucn ucn) { return ucn.pid != 0; }
 
 long read_word(struct ucn ucn, const void *addr) {
