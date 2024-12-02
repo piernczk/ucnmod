@@ -15,7 +15,7 @@ else
 	SOURCES = $(SRCDIR)/linux.c
 endif
 
-SOURCES += $(SRCDIR)/main.c
+SOURCES += $(SRCDIR)/main.c $(SRCDIR)/command.c
 OBJECTS := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 all: $(BINDIR)/$(TARGET)
