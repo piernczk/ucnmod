@@ -77,7 +77,7 @@ void cmd_detach(struct state *state, char *args) {
 void cmd_status(struct state *state, char *args) {
     if (is_attached(state->ucn)) {
         printf("Currently attached to process %i\n", state->ucn.pid);
-        printf("Base address: 0x%p\n", state->ucn.base);
+        printf("Base address: %p\n", state->ucn.base);
     } else {
         printf("Currently not attached\n");
     }
