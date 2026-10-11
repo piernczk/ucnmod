@@ -60,15 +60,12 @@ void cmd_attach(struct state *state, char *args) {
         }
     }
 
-    printf("Successfully attached to process %i\n", state->ucn.pid);
     state->prev_pid = state->ucn.pid;
 }
 
 void cmd_detach(struct state *state, char *args) {
     if (is_attached(state->ucn)) {
-        pid_t pid = state->ucn.pid;
         detach(&state->ucn);
-        printf("Successfully detached from process %i\n", pid);
     } else {
         printf("Not currently attached\n");
     }
@@ -104,8 +101,6 @@ void cmd_fps(struct state *state, char *args) {
             global1 =
                 (const void *)read_word(state->ucn, global1 + GLOBAL1_NEXT);
         }
-
-        printf("Successfully set fps to %i\n", fps);
     } else {
         const void *global1 =
             (const void *)read_word(state->ucn, state->ucn.base + GLOBAL1);
